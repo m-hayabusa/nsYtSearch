@@ -51,16 +51,28 @@ namespace nekomimiStudio.ytScraper
             }
         }
 
+        private readonly DataList itemList = new DataList();
         private void yatteiki(string title, string videoUrl, string description, string channelName, string channelUrl)
         {
-            yaaa++;
+            DataDictionary item = new DataDictionary();
+
+            item.Add("title", title);
+            item.Add("videoUrl", videoUrl);
+            item.Add("description", description);
+            item.Add("channelName", channelName);
+            item.Add("channelUrl", channelUrl);
+
+            itemList.Add(item);
+            int index = itemList.Count - 1;
+
             var baseContainer = transform.GetChild(0);
             var container = Instantiate(baseContainer.gameObject, transform).transform;
+            container.gameObject.name = index.ToString();
 
             var rect = container.GetComponent<RectTransform>();
             var pos = rect.anchoredPosition;
             pos.x = -5;
-            pos.y = -rect.sizeDelta.y * (yaaa - 1);
+            pos.y = -rect.sizeDelta.y * index;
             rect.anchoredPosition = pos;
 
             var r = this.GetComponent<RectTransform>();
@@ -78,14 +90,43 @@ namespace nekomimiStudio.ytScraper
             container.gameObject.SetActive(true);
         }
 
+        [SerializeField]
+        private Transform detailPanel;
+        public void clickListener(int index)
+        {
+            Debug.Log("clicked " + index);
+
+            string title = "(error)";
+            string videoUrl = "(error)";
+            string description = "(error)";
+            string channelName = "(error)";
+            string channelUrl = "(error)";
+
+            if (itemList.TryGetValue(index, out DataToken token))
+            {
+                DataDictionary item = token.DataDictionary;
+
+                if (item.TryGetValue("title", out token) && !token.IsNull) title = token.String;
+                if (item.TryGetValue("videoUrl", out token) && !token.IsNull) videoUrl = token.String;
+                if (item.TryGetValue("description", out token) && !token.IsNull) description = token.String;
+                if (item.TryGetValue("channelName", out token) && !token.IsNull) channelName = token.String;
+                if (item.TryGetValue("channelUrl", out token) && !token.IsNull) channelUrl = token.String;
+            }
+
+            detailPanel.Find("Title").GetComponent<TextMeshProUGUI>().text = title;
+            detailPanel.Find("Channel").GetComponent<TextMeshProUGUI>().text = channelName;
+            detailPanel.Find("Description").GetComponent<TextMeshProUGUI>().text = description;
+            detailPanel.Find("ContentURL").GetComponent<InputField>().text = videoUrl;
+            detailPanel.Find("ChannelURL").GetComponent<InputField>().text = channelUrl;
+        }
+
         public override void OnStringLoadError(IVRCStringDownload result)
         {
             Debug.Log(result.Error);
         }
-        int yaaa = 0;
         public override void OnStringLoadSuccess(IVRCStringDownload result)
         {
-            yaaa = 0;
+            itemList.Clear();
             // if (videoInfoDownloader) videoInfoDownloader.OnStringLoadSuccess(result);
             for (var i = 1; i < transform.childCount; i++)
             {
