@@ -1,0 +1,17 @@
+{
+  "name": "studio.nekomimi.ytsearch",
+  "displayName": "nS ytSearch",
+  "version": "0.0.1",
+  "description": "Youtube検索するやつ",
+  "dependencies": {},
+  "gitDependencies": {},
+  "vpmDependencies": {
+    "com.vrchat.worlds": "3.5.2"
+  },
+  "author": {
+    "name": "m-hayabusa",
+    "email": "mewl@mewl.me"
+  },
+  "legacyFolders": {},
+  "legacyFiles": {}
+}
