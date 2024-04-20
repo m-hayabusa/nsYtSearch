@@ -731,9 +731,9 @@ MonoBehaviour:
   m_OnSubmit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7410173122700007313}
+      - m_Target: {fileID: 1558452543880582603}
         m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_MethodName: SendCustomEvent
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -746,9 +746,9 @@ MonoBehaviour:
   m_OnDidEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7410173122700007313}
+      - m_Target: {fileID: 1558452543880582603}
         m_TargetAssemblyTypeName: 
-        m_MethodName: 
+        m_MethodName: SendCustomEvent
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
